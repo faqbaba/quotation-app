@@ -1,3 +1,4 @@
+console.log("Script Loaded");
 let grandTotal = 0;
 
 /* Quotation Number */
@@ -10,7 +11,6 @@ new Date().toLocaleDateString();
 
 function addItem(){
 
-    /* Client Information */
     let client =
     document.getElementById("clientName").value;
 
@@ -28,7 +28,6 @@ function addItem(){
     <hr>
     `;
 
-    /* Item Information */
     let item =
     document.getElementById("itemName").value;
 
@@ -54,11 +53,15 @@ function addItem(){
     row.insertCell(3).innerHTML =
     "₦" + amount.toLocaleString();
 
+    
+
+    updateTotals();
+
+
+}
+
+function updateTotals(){
+
     document.getElementById("total").innerHTML =
     "Total: ₦" + grandTotal.toLocaleString();
-
-    /* Clear Inputs */
-    document.getElementById("itemName").value = "";
-    document.getElementById("quantity").value = "";
-    document.getElementById("price").value = "";
 }

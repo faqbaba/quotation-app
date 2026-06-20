@@ -82,3 +82,32 @@ th{
     margin-top:20px;
     margin-bottom:20px;
 }
+.signatures{
+    display:flex;
+    justify-content:space-between;
+    margin-top:60px;
+}
+
+.sign-box{
+    text-align:center;
+}
+textarea{
+    width:100%;
+    padding:12px;
+    margin-top:10px;
+}
+@media print {
+
+    button{
+        display:none;
+    }
+
+    input,
+    textarea{
+        border:none;
+    }
+
+    body{
+        background:white;
+    }
+}

@@ -2,8 +2,15 @@ console.log("Script Loaded");
 let grandTotal = 0;
 
 /* Quotation Number */
+let quoteNumber = localStorage.getItem("quoteNumber") || 1;
+
 document.getElementById("quoteNo").innerHTML =
-"QT-" + Math.floor(Math.random() * 10000);
+"QT-2026-" + String(quoteNumber).padStart(3, "0");
+
+localStorage.setItem(
+    "quoteNumber",
+    Number(quoteNumber) + 1
+);
 
 /* Today's Date */
 document.getElementById("today").innerHTML =

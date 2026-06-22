@@ -58,6 +58,7 @@ placeholder="Project Name">
 id="location"
 placeholder="Project Location">
 
+<button onclick="saveClient()">Save Client</button>
 <hr>
 
 <h2>Add Items</h2>
@@ -79,15 +80,15 @@ Add Item
 </button>
 
 <table id="quotationTable">
-
-<tr>
-    <th>Item</th>
-    <th>Qty</th>
-    <th>Unit Price</th>
-    <th>Amount</th>
-    
-</tr>
-
+  <thead>
+    <tr>
+      <th>Item</th>
+      <th>Qty</th>
+      <th>Unit Price</th>
+      <th>Amount</th>
+    </tr>
+  </thead>
+  <tbody id="tableBody"></tbody>
 </table>
 
 <div class="totals">

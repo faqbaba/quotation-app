@@ -1,74 +1,74 @@
-console.log("Script Loaded");
-let grandTotal = 0;
+// ===== QUOTE NUMBER =====
+document.getElementById("quoteNo").innerText =
+  "QT-" + Math.floor(Math.random() * 1000000);
 
-/* Quotation Number */
-let quoteNumber = localStorage.getItem("quoteNumber") || 1;
+// ===== DATE =====
+document.getElementById("today").innerText =
+  new Date().toLocaleDateString();
 
-document.getElementById("quoteNo").innerHTML =
-"QT-2026-" + String(quoteNumber).padStart(3, "0");
+// ===== DATA STORAGE =====
+let items = [];
 
-localStorage.setItem(
-    "quoteNumber",
-    Number(quoteNumber) + 1
-);
+// ===== SAVE CLIENT INFO =====
+function saveClient() {
+  let name = document.getElementById("clientName").value;
+  let project = document.getElementById("projectName").value;
+  let location = document.getElementById("location").value;
 
-/* Today's Date */
-document.getElementById("today").innerHTML =
-new Date().toLocaleDateString();
-
-function addItem(){
-
-    let client =
-    document.getElementById("clientName").value;
-
-    let project =
-    document.getElementById("projectName").value;
-
-    let location =
-    document.getElementById("location").value;
-
-    document.getElementById("clientDisplay").innerHTML =
-    `
-    <p><strong>Client:</strong> ${client}</p>
+  document.getElementById("clientDisplay").innerHTML = `
+    <h3>Client Details</h3>
+    <p><strong>Name:</strong> ${name}</p>
     <p><strong>Project:</strong> ${project}</p>
     <p><strong>Location:</strong> ${location}</p>
     <hr>
-    `;
-
-    let item =
-    document.getElementById("itemName").value;
-
-    let qty =
-    Number(document.getElementById("quantity").value);
-
-    let price =
-    Number(document.getElementById("price").value);
-
-    let amount = qty * price;
-
-    grandTotal += amount;
-
-    let table =
-    document.getElementById("quotationTable");
-
-    let row = table.insertRow();
-
-    row.insertCell(0).innerHTML = item;
-    row.insertCell(1).innerHTML = qty;
-    row.insertCell(2).innerHTML =
-    "₦" + price.toLocaleString();
-    row.insertCell(3).innerHTML =
-    "₦" + amount.toLocaleString();
-
-    
-
-    updateTotals();
-
-
+  `;
 }
 
-function updateTotals(){
+// ===== ADD ITEM =====
+function addItem() {
+  let name = document.getElementById("itemName").value;
+  let qty = parseFloat(document.getElementById("quantity").value);
+  let price = parseFloat(document.getElementById("price").value);
 
-    document.getElementById("total").innerHTML =
-    "Total: ₦" + grandTotal.toLocaleString();
+  if (!name || !qty || !price) {
+    alert("Fill all item fields");
+    return;
+  }
+
+  let amount = qty * price;
+
+  items.push({ name, qty, price, amount });
+
+  renderTable();
+  calculateTotal();
+
+  document.getElementById("itemName").value = "";
+  document.getElementById("quantity").value = "";
+  document.getElementById("price").value = "";
+}
+
+// ===== RENDER TABLE =====
+function renderTable() {
+  let tbody = document.getElementById("tableBody");
+
+  tbody.innerHTML = "";
+
+  items.forEach((item, index) => {
+    tbody.innerHTML += `
+      <tr>
+        <td>${item.name}</td>
+        <td>${item.qty}</td>
+        <td>₦${item.price}</td>
+        <td>₦${item.amount}</td>
+      </tr>
+    `;
+  });
+}
+
+// ===== TOTAL =====
+function calculateTotal() {
+  let total = items.reduce((sum, item) => sum + item.amount, 0);
+
+  document.getElementById("total").innerText =
+    "Total: ₦" + total.toLocaleString();
 }

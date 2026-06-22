@@ -72,3 +72,16 @@ function calculateTotal() {
   document.getElementById("total").innerText =
     "Total: ₦" + total.toLocaleString();
 }
+function saveClient() {
+  let name = document.getElementById("clientName").value;
+  let project = document.getElementById("projectName").value;
+  let location = document.getElementById("location").value;
+
+  document.getElementById("clientDisplay").innerHTML = `
+    <h3>Client Details</h3>
+    <p><strong>Name:</strong> ${name}</p>
+    <p><strong>Project:</strong> ${project}</p>
+    <p><strong>Location:</strong> ${location}</p>
+    <hr>
+  `;
+}

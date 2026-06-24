@@ -272,12 +272,6 @@ function closeInvoice() {
 // =========================
 function downloadPDF() {
 
-  const buttons = document.querySelectorAll("button");
-
-  buttons.forEach(btn => {
-    btn.style.display = "none";
-  });
-
   const element = document.getElementById("quotationArea");
 
   html2pdf()
@@ -290,25 +284,20 @@ function downloadPDF() {
       },
       html2canvas: {
         scale: 2,
-        useCORS: true
+        useCORS: true,
+        logging: true
       },
       jsPDF: {
         unit: "mm",
         format: "a4",
         orientation: "portrait"
-      },
-      pagebreak: {
-        mode: ["css", "legacy"]
       }
     })
     .from(element)
     .save()
-    .then(() => {
-
-      buttons.forEach(btn => {
-        btn.style.display = "";
-      });
-
+    .catch(error => {
+      console.error(error);
+      alert("PDF Error: " + error);
     });
 
 }

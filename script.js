@@ -274,6 +274,8 @@ function downloadPDF() {
 
   const client = JSON.parse(localStorage.getItem("client")) || {};
 
+  const notes = document.getElementById("notes").value;
+
   const total = items.reduce((sum, item) => sum + item.amount, 0);
 
   let rows = "";
@@ -283,14 +285,15 @@ function downloadPDF() {
       <tr>
         <td>${item.name}</td>
         <td>${item.qty}</td>
-        <td>₦${item.price.toLocaleString()}</td>
-        <td>₦${item.amount.toLocaleString()}</td>
+        <td>₦${Number(item.price).toLocaleString()}</td>
+        <td>₦${Number(item.amount).toLocaleString()}</td>
       </tr>
     `;
   });
 
   const pdfContent = `
-    <div style="padding:20px;font-family:Arial;">
+    <div style="padding:20px;font-family:Arial,sans-serif;">
+
       <h1 style="text-align:center;">
         FAQ-SATROM ENTERPRISES LTD
       </h1>
@@ -308,6 +311,8 @@ function downloadPDF() {
 
       <hr>
 
+      <h3>Items</h3>
+
       <table border="1" width="100%" cellspacing="0" cellpadding="5">
         <tr>
           <th>Item</th>
@@ -319,27 +324,32 @@ function downloadPDF() {
         ${rows}
       </table>
 
-      <h2 style="text-align:right;">
+      <div style="
+        margin-top:20px;
+        text-align:right;
+        font-size:20px;
+        font-weight:bold;
+      ">
         Total: ₦${total.toLocaleString()}
-      </h2>
+      </div>
 
-      <br><br>
+      <div style="margin-top:30px;">
+        <h3>Notes</h3>
 
-      <h3>Notes</h3>
+        <div style="
+          border:1px solid #ccc;
+          padding:10px;
+          white-space:pre-wrap;
+        ">
+          ${notes}
+        </div>
+      </div>
 
-      <p>
-      1. This quotation is valid for 14 days from the date of issue.<br>
-      2. Material availability is subject to supplier stock.<br>
-      3. Transportation excluded unless stated.<br>
-      4. Scope changes may attract extra cost.<br>
-      5. Thank you for your patronage.
-      </p>
+      <div style="margin-top:40px;">
+        <p><strong>Prepared By:</strong></p>
+        <p>FAQ-SATROM ENTERPRISES LTD</p>
+      </div>
 
-      <br><br>
-
-      <p>Prepared By:</p>
-
-      <p><strong>FAQ-SATROM ENTERPRISES LTD</strong></p>
     </div>
   `;
 
@@ -350,14 +360,21 @@ function downloadPDF() {
     .set({
       margin: 10,
       filename: `Quotation-${quoteNo}.pdf`,
-      image: { type: "jpeg", quality: 1 },
+      image: {
+        type: "jpeg",
+        quality: 1
+      },
       html2canvas: {
-        scale: 2
+        scale: 2,
+        useCORS: true
       },
       jsPDF: {
         unit: "mm",
         format: "a4",
         orientation: "portrait"
+      },
+      pagebreak: {
+        mode: ["css", "legacy"]
       }
     })
     .from(container)

@@ -272,89 +272,13 @@ function closeInvoice() {
 // =========================
 function downloadPDF() {
 
-  const client = JSON.parse(localStorage.getItem("client")) || {};
+  const buttons = document.querySelectorAll("button");
 
-  const notes = document.getElementById("notes").value;
-
-  const total = items.reduce((sum, item) => sum + item.amount, 0);
-
-  let rows = "";
-
-  items.forEach(item => {
-    rows += `
-      <tr>
-        <td>${item.name}</td>
-        <td>${item.qty}</td>
-        <td>₦${Number(item.price).toLocaleString()}</td>
-        <td>₦${Number(item.amount).toLocaleString()}</td>
-      </tr>
-    `;
+  buttons.forEach(btn => {
+    btn.style.display = "none";
   });
 
-  const pdfContent = `
-    <div style="padding:20px;font-family:Arial,sans-serif;">
-
-      <h1 style="text-align:center;">
-        FAQ-SATROM ENTERPRISES LTD
-      </h1>
-
-      <p><strong>Quotation No:</strong> ${quoteNo}</p>
-      <p><strong>Date:</strong> ${today}</p>
-
-      <hr>
-
-      <h3>Client Details</h3>
-
-      <p><strong>Name:</strong> ${client.name || ""}</p>
-      <p><strong>Project:</strong> ${client.project || ""}</p>
-      <p><strong>Location:</strong> ${client.location || ""}</p>
-
-      <hr>
-
-      <h3>Items</h3>
-
-      <table border="1" width="100%" cellspacing="0" cellpadding="5">
-        <tr>
-          <th>Item</th>
-          <th>Qty</th>
-          <th>Unit Price</th>
-          <th>Amount</th>
-        </tr>
-
-        ${rows}
-      </table>
-
-      <div style="
-        margin-top:20px;
-        text-align:right;
-        font-size:20px;
-        font-weight:bold;
-      ">
-        Total: ₦${total.toLocaleString()}
-      </div>
-
-      <div style="margin-top:30px;">
-        <h3>Notes</h3>
-
-        <div style="
-          border:1px solid #ccc;
-          padding:10px;
-          white-space:pre-wrap;
-        ">
-          ${notes}
-        </div>
-      </div>
-
-      <div style="margin-top:40px;">
-        <p><strong>Prepared By:</strong></p>
-        <p>FAQ-SATROM ENTERPRISES LTD</p>
-      </div>
-
-    </div>
-  `;
-
-  const container = document.createElement("div");
-  container.innerHTML = pdfContent;
+  const element = document.getElementById("quotationArea");
 
   html2pdf()
     .set({
@@ -377,8 +301,16 @@ function downloadPDF() {
         mode: ["css", "legacy"]
       }
     })
-    .from(container)
-    .save();
+    .from(element)
+    .save()
+    .then(() => {
+
+      buttons.forEach(btn => {
+        btn.style.display = "";
+      });
+
+    });
+
 }
 function resetQuotation() {
   localStorage.removeItem("items");

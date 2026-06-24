@@ -123,3 +123,122 @@ textarea{
     display: none !important;
   }
 }
+#quotationArea {
+    max-width: 800px;
+    margin: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+td, th {
+    padding: 8px;
+    word-break: break-word;
+}
+
+#total {
+    text-align: right;
+}
+
+textarea {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+@media print {
+    button,
+    input {
+        display: none !important;
+    }
+
+    textarea {
+        border: none;
+    }
+}
+#quotationArea {
+    max-width: 800px;
+    margin: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+td, th {
+    padding: 8px;
+    word-break: break-word;
+}
+
+#total {
+    text-align: right;
+}
+
+textarea {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+@media print {
+    button,
+    input {
+        display: none !important;
+    }
+
+    textarea {
+        border: none;
+    }
+}
+#quotationArea{
+    max-width:800px;
+    margin:auto;
+    padding:20px;
+    background:#fff;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+table th,
+table td{
+    border:1px solid #ddd;
+    padding:8px;
+    text-align:center;
+}
+
+textarea{
+    width:100%;
+    box-sizing:border-box;
+}
+
+.company-header img{
+    max-width:120px;
+    display:block;
+    margin:auto;
+}
+
+#total{
+    text-align:right;
+    margin-top:20px;
+}
+
+@media print{
+    button,
+    input{
+        display:none !important;
+    }
+
+    textarea{
+        border:none;
+        resize:none;
+    }
+
+    .dashboard-section,
+    #invoiceView{
+        display:none !important;
+    }
+}

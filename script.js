@@ -1,7 +1,7 @@
 // =========================
 // FAQ-SATROM QUOTATION SYSTEM PRO FINAL
 // =========================
-
+console.log("SCRIPT LOADED");
 // ===== QUOTE NUMBER (STABLE) =====
 let quoteNo = localStorage.getItem("quoteNo");
 

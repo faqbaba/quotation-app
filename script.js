@@ -271,63 +271,97 @@ function closeInvoice() {
 // PDF EXPORT (FULL)
 // =========================
 function downloadPDF() {
-  const element = document.getElementById("quotationArea");
 
-  // Hide buttons before PDF generation
-  const buttons = element.querySelectorAll("button");
-  buttons.forEach(btn => btn.style.display = "none");
+  const client = JSON.parse(localStorage.getItem("client")) || {};
 
-  const opt = {
-    margin: 10,
-    filename: "FAQ-SATROM-Quotation.pdf",
-    image: {
-      type: "jpeg",
-      quality: 1
-    },
-    html2canvas: {
-      scale: 2,
-      useCORS: true,
-      scrollY: 0
-    },
-    jsPDF: {
-      unit: "mm",
-      format: "a4",
-      orientation: "portrait"
-    },
-    pagebreak: {
-      mode: ["avoid-all", "css", "legacy"]
-    }
-  };
+  const total = items.reduce((sum, item) => sum + item.amount, 0);
+
+  let rows = "";
+
+  items.forEach(item => {
+    rows += `
+      <tr>
+        <td>${item.name}</td>
+        <td>${item.qty}</td>
+        <td>₦${item.price.toLocaleString()}</td>
+        <td>₦${item.amount.toLocaleString()}</td>
+      </tr>
+    `;
+  });
+
+  const pdfContent = `
+    <div style="padding:20px;font-family:Arial;">
+      <h1 style="text-align:center;">
+        FAQ-SATROM ENTERPRISES LTD
+      </h1>
+
+      <p><strong>Quotation No:</strong> ${quoteNo}</p>
+      <p><strong>Date:</strong> ${today}</p>
+
+      <hr>
+
+      <h3>Client Details</h3>
+
+      <p><strong>Name:</strong> ${client.name || ""}</p>
+      <p><strong>Project:</strong> ${client.project || ""}</p>
+      <p><strong>Location:</strong> ${client.location || ""}</p>
+
+      <hr>
+
+      <table border="1" width="100%" cellspacing="0" cellpadding="5">
+        <tr>
+          <th>Item</th>
+          <th>Qty</th>
+          <th>Unit Price</th>
+          <th>Amount</th>
+        </tr>
+
+        ${rows}
+      </table>
+
+      <h2 style="text-align:right;">
+        Total: ₦${total.toLocaleString()}
+      </h2>
+
+      <br><br>
+
+      <h3>Notes</h3>
+
+      <p>
+      1. This quotation is valid for 14 days from the date of issue.<br>
+      2. Material availability is subject to supplier stock.<br>
+      3. Transportation excluded unless stated.<br>
+      4. Scope changes may attract extra cost.<br>
+      5. Thank you for your patronage.
+      </p>
+
+      <br><br>
+
+      <p>Prepared By:</p>
+
+      <p><strong>FAQ-SATROM ENTERPRISES LTD</strong></p>
+    </div>
+  `;
+
+  const container = document.createElement("div");
+  container.innerHTML = pdfContent;
 
   html2pdf()
-    .set(opt)
-    .from(element)
-    .save()
-    .then(() => {
-      buttons.forEach(btn => btn.style.display = "");
+    .set({
+      margin: 10,
+      filename: `Quotation-${quoteNo}.pdf`,
+      image: { type: "jpeg", quality: 1 },
+      html2canvas: {
+        scale: 2
+      },
+      jsPDF: {
+        unit: "mm",
+        format: "a4",
+        orientation: "portrait"
+      }
     })
-    .catch(err => {
-      console.error(err);
-      buttons.forEach(btn => btn.style.display = "");
-      alert("PDF generation failed");
-    });
-}
-
-// =========================
-// SINGLE INVOICE PDF
-// =========================
-function downloadSinglePDF() {
-  let element = document.getElementById("invoiceContent");
-
-  let opt = {
-    margin: 0.5,
-    filename: "FAQ-SATROM-Invoice.pdf",
-    image: { type: "jpeg", quality: 0.98 },
-    html2canvas: { scale: 2 },
-    jsPDF: { unit: "in", format: "a4", orientation: "portrait" }
-  };
-
-  html2pdf().set(opt).from(element).save();
+    .from(container)
+    .save();
 }
 function resetQuotation() {
   localStorage.removeItem("items");

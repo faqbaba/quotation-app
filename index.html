@@ -8,6 +8,7 @@
 
 </head>
 <body>
+    <div id="quotationArea">
     <div class="company-header">
     <img src="logo.png" alt="Company Logo">
 
@@ -61,6 +62,7 @@ placeholder="Project Location">
 <button onclick="saveClient()">Save Client</button>
 <hr>
 
+
 <h2>Add Items</h2>
 
 <input type="text"
@@ -79,6 +81,8 @@ placeholder="Unit Price">
 Add Item
 </button>
 
+<!-- PUT IT HERE -->
+<button onclick="clearItems()">Clear Items</button>
 <table id="quotationTable">
   <thead>
     <tr>
@@ -86,6 +90,7 @@ Add Item
       <th>Qty</th>
       <th>Unit Price</th>
       <th>Amount</th>
+      <th>Action</th>
     </tr>
   </thead>
   <tbody id="tableBody"></tbody>
@@ -97,8 +102,10 @@ Add Item
         Total: ₦0
     </h2>
 
-
 </div>
+
+<button onclick="saveQuotation()">Save Quotation</button>
+<button onclick="resetQuotation()">New Quotation</button>
 
 <h3>Notes</h3>
 
@@ -118,8 +125,8 @@ rows="6">
 
 </textarea>
 
-<button onclick="window.print()">
-Download / Print PDF
+<button onclick="downloadPDF()">
+Download PDF
 </button>
 
 <div class="signature">
@@ -156,6 +163,18 @@ Download / Print PDF
     <p>Email: satrom.enterprises@gmail.com</p>
 
 </div>
+</div>
+<section class="dashboard-section">
+  <h2>Quotation History</h2>
+  <div id="dashboard"></div>
+</section>
+<div id="invoiceView" style="display:none;">
+  <button onclick="closeInvoice()">← Back</button>
 
+  <div id="invoiceContent"></div>
+
+  <button onclick="downloadSinglePDF()">Download This Invoice PDF</button>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 <script src="script.js"></script>
 </body>

@@ -273,34 +273,27 @@ function closeInvoice() {
 function downloadPDF() {
 
   const element = document.getElementById("quotationArea");
+html2pdf()
+.set({
+  margin: [15, 10, 15, 10],
+  filename: `Quotation-${quoteNo}.pdf`,
+  image: { type: "jpeg", quality: 1 },
+  html2canvas: {
+    scale: 1,
+    useCORS: true
+  },
+  jsPDF: {
+    unit: "mm",
+    format: "a4",
+    orientation: "portrait"
+  },
+  pagebreak: {
+    mode: ['avoid-all', 'css', 'legacy']
+  }
+})
+.from(document.getElementById("quotationArea"))
+.save();
 
-  html2pdf()
-    .set({
-      margin: 10,
-      filename: `Quotation-${quoteNo}.pdf`,
-      image: {
-        type: "jpeg",
-        quality: 1
-      },
-      html2canvas: {
-        scale: 2,
-        useCORS: true,
-        logging: true
-      },
-      jsPDF: {
-        unit: "mm",
-        format: "a4",
-        orientation: "portrait"
-      }
-    })
-    .from(element)
-    .save()
-    .catch(error => {
-      console.error(error);
-      alert("PDF Error: " + error);
-    });
-
-}
 function resetQuotation() {
   localStorage.removeItem("items");
   localStorage.removeItem("client");

@@ -245,3 +245,15 @@ textarea{
 .pdf-hide {
     display: none !important;
 }
+table,
+textarea,
+.signature,
+.signatures,
+.footer-info {
+    page-break-inside: avoid;
+}
+
+#quotationArea {
+    width: 100%;
+    overflow: hidden;
+}

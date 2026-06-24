@@ -271,17 +271,46 @@ function closeInvoice() {
 // PDF EXPORT (FULL)
 // =========================
 function downloadPDF() {
-  let element = document.getElementById("quotationArea");
+  const element = document.getElementById("quotationArea");
 
-  let opt = {
-    margin: 0.5,
+  // Hide buttons before PDF generation
+  const buttons = element.querySelectorAll("button");
+  buttons.forEach(btn => btn.style.display = "none");
+
+  const opt = {
+    margin: 10,
     filename: "FAQ-SATROM-Quotation.pdf",
-    image: { type: "jpeg", quality: 0.98 },
-    html2canvas: { scale: 2 },
-    jsPDF: { unit: "in", format: "a4", orientation: "portrait" }
+    image: {
+      type: "jpeg",
+      quality: 1
+    },
+    html2canvas: {
+      scale: 2,
+      useCORS: true,
+      scrollY: 0
+    },
+    jsPDF: {
+      unit: "mm",
+      format: "a4",
+      orientation: "portrait"
+    },
+    pagebreak: {
+      mode: ["avoid-all", "css", "legacy"]
+    }
   };
 
-  html2pdf().set(opt).from(element).save();
+  html2pdf()
+    .set(opt)
+    .from(element)
+    .save()
+    .then(() => {
+      buttons.forEach(btn => btn.style.display = "");
+    })
+    .catch(err => {
+      console.error(err);
+      buttons.forEach(btn => btn.style.display = "");
+      alert("PDF generation failed");
+    });
 }
 
 // =========================

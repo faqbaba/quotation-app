@@ -268,33 +268,79 @@ function closeInvoice() {
 }
 
 // =========================
+/all', 'css', 'legacy']
+  }
+// =========================
 // PDF EXPORT (FULL)
 // =========================
 function downloadPDF() {
 
-  const element = document.getElementById("quotationArea");
-html2pdf()
-.set({
-  margin: [15, 10, 15, 10],
-  filename: `Quotation-${quoteNo}.pdf`,
-  image: { type: "jpeg", quality: 1 },
-  html2canvas: {
-    scale: 1,
-    useCORS: true
-  },
-  jsPDF: {
-    unit: "mm",
-    format: "a4",
-    orientation: "portrait"
-  },
-  pagebreak: {
-    mode: ['avoid-all', 'css', 'legacy']
-  }
-})
-.from(document.getElementById("quotationArea"))
-.save();
+  const notes = document.getElementById("notes");
 
+  // Auto expand notes before PDF export
+  notes.style.height = "auto";
+  notes.style.height = notes.scrollHeight + "px";
+
+  html2pdf()
+    .set({
+      margin: [10, 10, 10, 10],
+      filename: `Quotation-${quoteNo}.pdf`,
+      image: {
+        type: "jpeg",
+        quality: 1
+      },
+      html2canvas: {
+        scale: 2,
+        useCORS: true,
+        scrollY: 0
+      },
+      jsPDF: {
+        unit: "mm",
+        format: "a4",
+        orientation: "portrait"
+      },
+      pagebreak: {
+        mode: ["css", "legacy"]
+      }
+    })
+    .from(document.getElementById("quotationArea"))
+    .save();
+}
+
+// =========================
+// SINGLE INVOICE PDF
+// =========================
+function downloadSinglePDF() {
+
+  const element = document.getElementById("invoiceContent");
+
+  html2pdf()
+    .set({
+      margin: 10,
+      filename: "FAQ-SATROM-Invoice.pdf",
+      image: {
+        type: "jpeg",
+        quality: 1
+      },
+      html2canvas: {
+        scale: 2,
+        useCORS: true
+      },
+      jsPDF: {
+        unit: "mm",
+        format: "a4",
+        orientation: "portrait"
+      }
+    })
+    .from(element)
+    .save();
+}
+
+// =========================
+// NEW QUOTATION
+// =========================
 function resetQuotation() {
+
   localStorage.removeItem("items");
   localStorage.removeItem("client");
 
@@ -310,12 +356,18 @@ function resetQuotation() {
   document.getElementById("location").value = "";
 
   document.getElementById("clientDisplay").innerHTML = "";
+
   renderTable();
   calculateTotal();
 
   alert("Ready for new quotation");
 }
+
+// =========================
+// CLEAR ITEMS
+// =========================
 function clearItems() {
+
   items = [];
   localStorage.removeItem("items");
 

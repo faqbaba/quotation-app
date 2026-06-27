@@ -107,9 +107,9 @@ function renderTable() {
       <tr>
         <td>${item.name}</td>
         <td>${item.qty}</td>
-        <td>₦${item.price}</td>
-        <td>₦${item.amount}</td>
-        <td><button onclick="deleteItem(${index})">Delete</button></td>
+        <td>₦${item.price.toLocaleString()}</td>
+<td>₦${item.amount.toLocaleString()}</td>
+      <td><button class="delete-btn" onclick="deleteItem(${index})">Delete</button></td>
       </tr>
     `;
   });
@@ -267,9 +267,7 @@ function closeInvoice() {
   document.getElementById("dashboard").style.display = "block";
 }
 
-// =========================
-/all', 'css', 'legacy']
-  }
+
 // =========================
 // PDF EXPORT (FULL)
 // =========================
@@ -342,7 +340,18 @@ function downloadSinglePDF() {
 function resetQuotation() {
 
   localStorage.removeItem("items");
-  localStorage.removeItem("client");
+localStorage.removeItem("client");
+localStorage.removeItem("quoteNo");
+localStorage.removeItem("today");
+
+quoteNo = "QT-" + Math.floor(Math.random() * 1000000);
+today = new Date().toLocaleDateString();
+
+localStorage.setItem("quoteNo", quoteNo);
+localStorage.setItem("today", today);
+
+document.getElementById("quoteNo").innerText = quoteNo;
+document.getElementById("today").innerText = today;
 
   items = [];
   clientSaved = null;

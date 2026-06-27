@@ -102,16 +102,12 @@ Add Item
         <h2 id="total" style="text-align:right; padding-right:20px;"></h2>
 
 </div>
-<button class="pdf-hide" onclick="saveQuotation()">Save Quotation</button>
 
-<button class="pdf-hide" onclick="resetQuotation()">New Quotation</button>
-
-<button class="pdf-hide" onclick="downloadPDF()">Download PDF</button>
-
-<button class="pdf-hide" onclick="addItem()">Add Item</button>
-
-<button class="pdf-hide" onclick="clearItems()">Clear Items</button>
-
+<div class="action-buttons">
+    <button onclick="saveQuotation()">Save Quotation</button>
+    <button onclick="resetQuotation()">New Quotation</button>
+    <button onclick="downloadPDF()">Download PDF</button>
+</div>
 <h3>Notes</h3>
 
 <textarea
@@ -130,9 +126,6 @@ rows="10">
 
 </textarea>
 
-<button onclick="downloadPDF()">
-Download PDF
-</button>
 
 <div class="signature">
 

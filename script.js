@@ -275,13 +275,19 @@ function downloadPDF() {
 
   const notes = document.getElementById("notes");
 
-  // Auto expand notes before PDF export
-  notes.style.height = "auto";
-  notes.style.height = notes.scrollHeight + "px";
+  if (notes) {
+    notes.style.height = "auto";
+    notes.style.height = notes.scrollHeight + "px";
+  }
+
+  // Hide all buttons and inputs
+  document.querySelectorAll("button, input").forEach(el => {
+    el.classList.add("no-pdf");
+  });
 
   html2pdf()
     .set({
-      margin: [10, 10, 10, 10],
+      margin: 10,
       filename: `Quotation-${quoteNo}.pdf`,
       image: {
         type: "jpeg",
@@ -302,9 +308,15 @@ function downloadPDF() {
       }
     })
     .from(document.getElementById("quotationArea"))
-    .save();
-}
+    .save()
+    .then(() => {
+      // Show them again on the webpage
+      document.querySelectorAll("button, input").forEach(el => {
+        el.classList.remove("no-pdf");
+      });
+    });
 
+}
 // =========================
 // SINGLE INVOICE PDF
 // =========================

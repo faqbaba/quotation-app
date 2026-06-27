@@ -46,7 +46,7 @@ Lagos, Nigeria.
 
 </div>
 
-<div id="clientDisplay"></div>
+<div id="clientDisplay">
 <input type="text"
 id="clientName"
 placeholder="Client Name">
@@ -58,8 +58,9 @@ placeholder="Project Name">
 <input type="text"
 id="location"
 placeholder="Project Location">
+</div>
 
-<button onclick="saveClient()">Save Client</button>
+<button class="hide-after-pdf" onclick="saveClient()">Save Client</button>
 <hr>
 
 
@@ -75,14 +76,12 @@ placeholder="Quantity">
 
 <input type="number"
 id="price"
-placeholder="Unit Price">
+placeholder="price">
+<button class="hide-after-pdf" onclick="addItem()">Add Item</button>
 
-<button onclick="addItem()">
-Add Item
-</button>
+<button class="hide-after-pdf" onclick="clearItems()">Clear Items</button>
 
-<!-- PUT IT HERE -->
-<button onclick="clearItems()">Clear Items</button>
+
 <table id="quotationTable">
   <thead>
     <tr>
@@ -102,30 +101,25 @@ Add Item
         <h2 id="total" style="text-align:right; padding-right:20px;"></h2>
 
 </div>
-
-<div class="action-buttons">
+<div class="action-buttons hide-after-pdf">
     <button onclick="saveQuotation()">Save Quotation</button>
     <button onclick="resetQuotation()">New Quotation</button>
     <button onclick="downloadPDF()">Download PDF</button>
 </div>
+
 <h3>Notes</h3>
 
-<textarea
-id="notes"
-rows="10">
+<div id="notes" class="notes-box">
+    <p>1. This quotation is valid for 14 days from the date of issue.</p>
 
-1. This quotation is valid for 14 days from the date of issue.
+    <p>2. Material availability is subject to supplier stock at the time of purchase.</p>
 
-2. Material availability is subject to supplier stock at the time of purchase.
+    <p>3. Transportation and delivery charges are excluded from this quotation unless expressly stated.</p>
 
-3. Transportation and delivery charges are excluded from this quotation unless expressly stated.
+    <p>4. Any variation to the scope of work may attract additional costs.</p>
 
-4. Any variation to the scope of work may attract additional costs.
-
-5. We appreciate the opportunity to serve you.
-
-</textarea>
-
+    <p>5. We appreciate the opportunity to serve you.</p>
+</div>
 
 <div class="signature">
 
